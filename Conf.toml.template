@@ -1,0 +1,6 @@
+rpc_url = "$RPC_URL"
+rpc_user = "$RPC_USER"
+rpc_password = "$RPC_PASSWORD"
+
+server_port = $SERVER_PORT
+server_addr = "$SERVER_ADDR"

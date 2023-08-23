@@ -1,0 +1,5 @@
+version: '3'
+services:
+  verusd_rpc_server:
+    build:
+      context: .
