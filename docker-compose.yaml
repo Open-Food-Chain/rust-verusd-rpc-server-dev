@@ -3,3 +3,5 @@ services:
   verusd_rpc_server:
     build:
       context: .
+    ports:
+    - "7000:7000"

@@ -52,15 +52,28 @@ impl VerusRPC {
     
         let client = self.client.lock().unwrap();
         let request = client.build_request(method, &params);
-
-        let response = client.send_request(request).map_err(|e| match e {
-            jsonrpc::Error::Rpc(rpc_error) => rpc_error,
-            _ => RpcError { code: -32603, message: "Internal error".into(), data: None },
+        let response = client.send_request(request).map_err(|e| {
+            println!("{}", e);
+            match e {
+                jsonrpc::Error::Rpc(rpc_error) => rpc_error,
+                _ => RpcError {
+                    code: -32603,
+                    message: "Internal error".into(),
+                    data: None,
+                },
+            }
         })?;
-        
-        let result: Value = response.result().map_err(|e| match e {
-            jsonrpc::Error::Rpc(rpc_error) => rpc_error,
-            _ => RpcError { code: -32603, message: "Internal error".into(), data: None },
+       
+        let result: Value = response.result().map_err(|e| {
+            println!("{}", e);
+            match e {
+                jsonrpc::Error::Rpc(rpc_error) => rpc_error,
+                _ => RpcError {
+                    code: -32603,
+                    message: "Internal error".into(),
+                    data: None,
+                },
+            }
         })?;
         Ok(result)
     }
