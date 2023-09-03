@@ -1,45 +1,78 @@
-# Rust Verusd RPC Server
-
-This repository contains a Rust library for creating a Verus RPC server. The library is designed to be simple to use, yet flexible enough to handle the needs of a variety of applications.
-
-## Getting Started
-
-To get started with this library, you'll need to have Rust installed on your machine. If you don't have Rust installed, you can download it from the [official website](https://www.rust-lang.org/tools/install).
+# Rust Verusd RPC Server (Dockerize)
+This repository contains a Rust library for creating a Verus RPC server. The library is designed to be simple to use, yet flexible enough to handle the needs of a variety of applications [(Forked)](https://github.com/VerusCoin/rust_verusd_rpc_server).
 
 ### Prerequisites
+- [Docker and Docker Compose](https://docs.docker.com/engine/install/)
 
-- Rust programming language
-- Git
+### How to configure
+1. Edit Dockerfile
+2. Adjust the ENVs
+```sh
+ENV RPC_URL "<server-public-ip>:<rpc-port>"
+ENV RPC_USER "<rpc-user>"
+ENV RPC_PASSWORD "<rpc-password>"
+ENV SERVER_PORT "7000"
+ENV SERVER_ADDR "0.0.0.0"
+```
+
+- RPC_URL: The RPC url and port. IMPORTANT NOTE: Use the public server IP rather than 0.0.0.0 / 127.0.0.1 / localhost
+- RPC_USER: The RPC username
+- RPC_PASSWORD: The RPC password
 
 ### Installation
-
-1. Clone the repository to your local machine:
-
-```bash
-git clone https://github.com/VerusCoin/rust_verusd_rpc_server.git
+```sh
+$ docker-compose up -d
 ```
 
-2. Navigate into the project directory:
-
-```bash
-cd rust_verusd_rpc_server
+### Test
+```sh
+$ curl --user <rpc-user>:<rpc-password> --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getinfo", "params": []}' -H 'content-type: text/plain;' http://0.0.0.0:7000/
 ```
 
-3. Build the project:
-
-```bash
-cargo build
+Result:
+```json
+{
+  "result": {
+    "CCid": ...,
+    "KMDnotarized_height": ...,
+    "KMDversion": "...",
+    "balance": ...,
+    "blocks": ...,
+    "connections": ...,
+    "decay": "...",
+    "difficulty": ...,
+    "endsubsidy": "...",
+    "errors": "",
+    "halving": "...",
+    "keypoololdest": ...,
+    "keypoolsize": ...,
+    "longestchain": ...,
+    "magic": ...,
+    "name": "...",
+    "notarized": ...,
+    "notarized_confirms": ...,
+    "notarizedhash": "...",
+    "notarizedtxid": "...",
+    "notarizedtxid_height": "...",
+    "notarypay": "...",
+    "p2pport": ...,
+    "paytxfee": ...,
+    "premine": ...,
+    "prevMoMheight": ...,
+    "protocolversion": ...,
+    "proxy": "",
+    "pubkey": "...",
+    "relayfee": ...,
+    "reward": "...",
+    "rpcport": ...,
+    "sapling": ...,
+    "staked": ...,
+    "synced": ...,
+    "testnet": ...,
+    "timeoffset": ...,
+    "tiptime": ...,
+    "version": ...,
+    "walletversion": ...
+  }
+}
 ```
-
-### Usage
-
-1. Configure the server by editing the Conf.toml file
-
-2. Run the server:
-
-```bash
-cargo run
-```
-
-### Contributing
-Contributions are welcome! Please feel free to submit a pull request.
